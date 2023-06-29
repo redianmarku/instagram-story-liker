@@ -85,7 +85,7 @@ def like_stories(username, password, usernames):
         if view_story_button:
             print("[TRUE] User -> " + follower + " has story up.")
             view_story_button[0].click()                
-            time.sleep(2)
+            time.sleep(4)
             
             try:
                 like_button = driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div/div[1]/div[1]/section/div[1]/div/section/div/div[3]/div/div/div[2]/span/div")
