@@ -127,7 +127,7 @@ if __name__ == "__main__":
     else:
         username, password = credentials
 
-    followers_file = "4.txt"
+    followers_file = "followers.txt"
     usernames = read_usernames_from_file(followers_file)
 
     like_stories(username, password, usernames)
