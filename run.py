@@ -81,42 +81,39 @@ def like_stories(username, password, usernames):
         time.sleep(2)
 
         # Check if the "View Story" button exists
-        view_story_button = driver.find_elements(By.XPATH, "//div/div/div[2]/div/div/div/div[1]/div[1]/section/div[1]/div/section/div/div[1]/div/div/div/div/div[3]/div")
-        if view_story_button:
-            print("[TRUE] User -> " + follower + " has story up.")
-            view_story_button[0].click()                
+        view_story_xpath = "//div/div/div[2]/div/div/div[1]/div[1]/section/div[1]/div/div/div/div[2]/div/div[3]/div"
+        like_button_xpath = "//div/div/div[2]/div/div/div[1]/div[1]/section/div[1]/div/div/div[1]/div[2]/div[2]/div[1]/div[2]/span/div"
+        like_button_xpath1 = "//div/div/div[2]/div/div/div[1]/div[1]/section/div[1]/div/div/div[1]/div[2]/div[3]/div[1]/div[2]/span/div"
+        try:
+            view_story_button = driver.find_element(By.XPATH, view_story_xpath)
+            print("[TRUE] User -> " + follower + " has a story up.")
+            view_story_button.click()
             time.sleep(4)
-            
+
             try:
-                like_button = driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div/div[1]/div[1]/section/div[1]/div/section/div/div[3]/div/div/div[2]/span/div")
-                # Click on the like button or perform desired action
+                like_button = driver.find_element(By.XPATH, like_button_xpath)
                 like_button.click()
-                print("Liked the story successfuly!")
+                print("Liked the story successfully!")
                 time.sleep(2)
             except NoSuchElementException:
                 try:
-                    like_button = driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div/div[1]/div[1]/section/div[1]/div/section/div/div[3]/div/div/div[1]/span/div")
-                    # Click on the like button or perform desired action
+                    # Try the second path if the first one fails
+                    like_button = driver.find_element(By.XPATH, like_button_xpath1)
                     like_button.click()
-                    print("Liked the story successfuly!")
+                    print("Liked the story successfully using the second path!")
                     time.sleep(2)
                 except NoSuchElementException:
-                    # Both XPaths failed, skip to the next action or user
-                    print("Failed to like the story.")
-                    continue  # Assuming this is inside a loop
+                    print("Like button not found.")
 
-            # like_button = driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div/div[1]/div[1]/section/div[1]/div/section/div/div[3]/div/div/div[2]/span/div")
-            # like_button.click()
-            # time.sleep(2)
-        else:
+            
+        except NoSuchElementException:
             print("[FALSE] User -> " + follower + " has no story up.")
-            continue
+        except Exception as e:
+            print("An unexpected error occurred:", str(e))
 
 
-    remove_username_from_file(follower, followers_file)
+            remove_username_from_file(follower, followers_file)
 
-    # Close the ChromeDriver instance
-    driver.quit()
 
 
 if __name__ == "__main__":
